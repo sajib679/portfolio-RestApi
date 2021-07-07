@@ -42,6 +42,4 @@ app.use("/api", contactRoutes);
 
 // Main App Body End
 
-app.listen(process.env.PORT, () => {
-  console.log(`SERVER started at, http://localhost:` + process.env.PORT);
-});
+app.listen(process.env.PORT, () => {});

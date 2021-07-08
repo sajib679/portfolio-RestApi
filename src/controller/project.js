@@ -1,7 +1,7 @@
 const Project = require("../models/project");
 
 exports.createProject = (req, res) => {
-  const { title, desc, techStack, link } = req.body;
+  const { title, desc, techStack, link, projectPictures } = req.body;
 
   const tags = techStack.split(",");
 
@@ -16,16 +16,18 @@ exports.createProject = (req, res) => {
     projectObject.category = req.body.category;
   }
 
-  let projectPictures = [];
+  let uploadedPictures = [];
 
   if (req.files) {
     if (req.files.length > 0) {
-      projectPictures = req.files.map((file) => {
-        return { img: file.filename };
+      uploadedPictures = req.files.map((file) => {
+        return { img: process.env.BASE_IMAGE_URL + file.filename };
       });
     }
 
-    projectObject.projectPictures = projectPictures;
+    projectObject.projectPictures = uploadedPictures;
+  } else {
+    projectObject.projectPictures = { img: projectPictures };
   }
 
   const project = new Project(projectObject);
